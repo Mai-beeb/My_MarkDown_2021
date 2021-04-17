@@ -1,0 +1,308 @@
+---
+title: "Advanced Bioinformatics 2019 assessment"
+author: "m1700635"
+date: "05/04/2021"
+output: html_document
+---
+
+# Question 3.1. Using the sum() function and : operator, write an expression in the code snippet to evaluate the sum of all integers between 5 and 55. 
+
+#How to use sum integers and numbers in R programming: 
+#There are different ways to do so: 
+#I will use sum command to sum every number in the range 5->55. The answer is 1530
+#sum(5:55)
+
+```{r}
+sum(5:55)
+```
+
+#We can also find the sum from a few numbers, which determined between 5 and 55
+sum(5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55)
+
+```{r}
+sum(5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55)
+```
+
+#We can generate a sequence of numbers either named #(specified) using from, by, and to:
+#seq(5,55,1)
+
+```{r}
+seq(5,55,1)
+```
+
+#or unnamed (not specified) using:
+#seq(by=1, from=5, to=55)
+
+```{r}
+seq(by=1, from=5, to=55)
+```
+
+#Since the vector is an ordered list of numbers, we have to use the command 
+#sum x <- c(5:55);sum(x)
+
+```{r}
+sum(x <- c(5:55))
+```
+
+# Question 3.2. Write a function called sumfun with one input parameter, called n, that calculates the sum of all integers between 5 and n. Use the function to do the calculation for n = 10, n = 20, and n = 100 and present the results.
+
+```{r}
+sumfun <- function(n) {sum(5:n)}
+```
+
+
+```{r}
+sumfun(10)
+```
+
+```{r}
+sumfun(20)
+```
+
+```{r}
+sumfun(100)
+```
+
+# Question 3.3. The famous Fibonacci series is calculated as the sum of the two preceding members of the sequence, where the first two steps in the sequence are 1, 1. Write an R script using a for loop to calculate and print out the first 12 entries of the Fibonacci series. 
+
+#to calculate the Fibonacci series with n values:
+#fib <- function(n)
+#or fib <-numeric(n)
+
+```{r}
+fib <-numeric(12)
+```
+
+#fib of the first number is 1
+#fib[1] <- 1
+
+```{r}
+fib[1] <- 1
+```
+
+#fib of the second number is 2
+#fib[2] <- 1
+
+```{r}
+fib[2] <- 1
+```
+
+#the loop starts from the third number; that means: #i = 3
+
+```{r}
+i = 3
+```
+
+#we have to repeat the loop to the 12th number of fib
+
+ 
+```{r}
+fib <- function(n) {  # function for calculating fibonnaci of a vector with n values
+   fib <-numeric(n)
+   fib[1] <- 1 
+   # fib of the first number is 1
+   fib[2] <- 1 
+   # fib of the second number is 2
+   i = 3 
+   # start the loop at the third element
+   
+   while (i <= n) { # repeat the loop for the 12th  number of fib
+   fib[i]=fib[i - 1] + fib[i - 2]
+   i<- i + 1
+  }
+  return(fib) # return the modified vector
+ }
+ fib(12)
+```
+ 
+
+# Question 3.4. With the mtcars dataset bundled with R, use ggplot to generate a box of miles per gallon (in the variable mpg) as a function of the number of gears (in the variable gear). Use the fill aesthetic to colour bars by number of gears.
+
+```{r}
+str(mtcars)
+```
+
+```{r}
+library(ggplot2)
+```
+
+
+```{r}
+ggplot(data = mtcars, aes(x= as.factor(gear), y= mpg)) + geom_boxplot(aes(fill= as.factor(gear) )) + ggtitle(" Box of Miles per Gallon(mpg) as a Function of Gears")
+```
+
+
+# Question 3.5. Using the cars dataset and the function lm, fit a linear relationship between speed and breaking distance in the variable distance. What are the fitted slope and intercept of the line, and their standard errors? What are the units used for the variables in the dataset?
+
+#First, we have to set variable for x  and y axises. #then, we can set linear model formula and get the summary of model
+
+```{r}
+y <- cars $dist; x <- cars $speed; 
+model <- lm(formula = "y ~ x")
+summary(model)
+```
+
+#To answer these questions from the coefficient dataset provided above, we can determine:
+#The fitted slope is 3.9324
+#The intercept of the line is -17.5791
+#Their standard errors are 6.7584 (for intercept (dist)) #and 0.4155 (for X (speed))
+#The units used for the variables in the dataset to #measure the speed and breaking distance is feet
+
+
+
+# Question 3.6. Use ggplot to plot the data points from Task 6 and the linear fit. 
+
+#we have to download: library(ggplot2) to help us run the plots
+
+```{r}
+library(ggplot2)
+```
+
+
+#we have to identify the variables to run the plots
+
+```{r}
+qplot(speed, dist, data = cars, geom ="point")
+```
+
+```{r}
+qplot(speed, dist, data = cars, geom ="point") + geom_smooth(method= "lm", se = FALSE)
+```
+
+#we have to create new variables named ggplot_new and add a title, x, and y lables it to the previous plot
+
+```{r}
+ggplot <- ggplot(data = cars, aes(x= speed, y=dist)) + geom_point() + geom_smooth(method = "lm",formula = "y ~ x")
+```
+
+
+```{r}
+ggplot_new <- ggplot + ggtitle ("Linear model of the relationship between breaking distance(dist) and speed")+ xlab("speed(milesperhour)")+ ylab("dist(feet)")
+ggplot_new
+```
+
+
+```{r}
+ggplot_new
+```
+
+# Question 3.7. Again using the cars dataset, now use linear regression (lm) to estimate the average reaction time for the driver to start breaking (in seconds). To simplify matters you may assume that once breaking commences, breaking distance is proportional to the square of the speed. Explain the steps in your analysis. Do you get reasonable results? Finally, use ggplot to plot the data points and the fitted relationship. 
+
+```{r}
+model$residuals
+```
+
+```{r}
+View <- lm(dist ~ speed, data = cars)
+```
+
+
+```{r}
+model <- lm(dist ~ speed, data = cars)
+```
+
+
+```{r}
+summary(model)
+```
+
+```{r}
+cars$residuals <- model$residuals
+```
+
+
+```{r}
+View(cars)
+```
+
+
+```{r}
+cars$spridicted <- model$fitted.values
+```
+
+
+```{r}
+predict(model, data.frame(speed = c(12.5, 15.5, 17)))
+```
+
+
+```{r}
+predict(model, data.frame(speed = c(12, 15, 18)))
+```
+
+```{r}
+ggplot <- ggplot(data = cars, aes(x= speed, y=dist)) + geom_point() + geom_smooth(method = "lm",formula = "y ~ x")
+ggplot_new
+```
+
+#First: we have to idenify the variables: 
+#breaking    distance in miles = dist_m
+#one foot in miles = 0.000189394
+#we have convert distance to miles
+#dist_m <- cars$dist*0.00018939
+#Second: we have to idenify the variables: 
+#speed in miles per hour = speed_m_h
+#the breaking distance is propotional to square of 
+#the speed: speed_m_h <- cars $speed^2
+#Now ready for the formula of linear model (lm): #lm(formula = dist_m ~ speed_m_h)
+
+```{r}
+dist_m <- cars$dist*0.000189394
+```
+
+
+```{r}
+speed_m_h <- cars $speed^2
+```
+
+
+```{r}
+lm(formula = dist_m ~ speed_m_h)
+```
+
+#since the distance and speed are constant and the #slope means half the reaction time, we have to #convert the reaction time in one hour to seconds: #1*60*60 = 3600 seconds
+#reaction_time <- 2.443e-05*2
+#the slope reaction time is twice or double the #reaction time
+
+
+```{r}
+reaction_time <- 2.443e-05*2
+```
+
+```{r}
+coverted_reaction_time <- reaction_time/3600
+```
+
+
+```{r}
+coverted_reaction_time
+```
+
+#the results are not significant for the reaction #time and they are negative for the reaction time. 
+#the results expected to be proportional and double #the value of the slope reaction_time
+
+
+```{r}
+library(ggplot2)
+```
+
+
+```{r}
+plot_1 <- ggplot(data = cars, aes(speed_m_h, dist_m))+geom_point()
+```
+
+
+```{r}
+plot_2 <- plot_1 + geom_smooth(method = "lm", formula = dist_m ~ speed_m_h)
+```
+
+
+```{r}
+plot_3 <- plot_2 + ggtitle("Regression Model between Breaking Distance and Speed")
+```
+
+
+```{r}
+plot_3
+```
+
